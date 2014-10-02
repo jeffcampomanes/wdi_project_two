@@ -1,39 +1,54 @@
+$(function(){
 console.log("testing html page");
 
+/////////////////////////////////////////////////////////////////
 
-var ItemModel = Backbone.Model.extend({
-	urlRoot: ''
-});
+// var ItemView = Backbone.View.extend({
+// 	tagName:"ul",
+// 	this.template = _.template($('#template').html())
 
-
-
-var ItemView = Backbone.View.extend({
-	tagName:"ul",
-	this.template = _.template($('#template').html())
-
-	events: {
+// 	events: {
 		
-	},
+// 	},
 
-	initialize: function(){
-		this.listenTo(this.model, 'change', this.render)
-		this.listenTo(this.model, 'destroy', this.remove)
-		this.template = _.template($('#template').html())
-	},
+// 	initialize: function(){
+// 		this.listenTo(this.model, 'change', this.render)
+// 		this.listenTo(this.model, 'destroy', this.remove)
+// 		this.template = _.template($('#template').html())
+// 	},
 
-	render:function(){
-	   var myTemplate = this.template({item: this.model.attributes})
+// 	render:function(){
+// 	   var myTemplate = this.template({item: this.model.attributes})
 		
-		this.$el.html(myTemplate);
-	}
-})
+// 		this.$el.html(myTemplate);
+// 	}
+// })
 
-var ItemCollection = Backbone.Collection.extend({
-	url: '/',
-	model: MyModel
-});
+/////////////////////////////////////////////////////////////////
 
-var ItemCollection = Backbone.Collection.extend({
-	url: '/',
-	model: MyModel
+// submit button
+var submitButton = $('button#submit');
+	submitButton.on("click", function(event) {
+	event.preventDefault(); 
+		console.log("button click");
+	})
+
+// display categories on page
+	$.ajax({
+		type:"GET",
+		url:"/categories",
+	}).done(function(data){
+			console.log(data);
+			var categories = data;
+			var ul_categories = $('ul');
+				for(i = 0; i < categories.length; i++){
+				ul_categories.append('<li>' +categories[i]["name"]+ '</li>');	
+				}
+	});
+
+
+
+
+
+///////end//////		
 });
