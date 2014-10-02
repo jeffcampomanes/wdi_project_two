@@ -1,3 +1,5 @@
+CREATE DATABASE contact_list;
+
 CREATE TABLE categories(
   id serial primary key,
   name varchar(255)
@@ -12,3 +14,4 @@ CREATE TABLE contacts(
   picture text,
   category_id integer
 );
+	
