@@ -1,50 +1,45 @@
 $(function(){
 console.log("testing html page");
-
 /////////////////////////////////////////////////////////////////
 
-// var ItemView = Backbone.View.extend({
-// 	tagName:"ul",
-// 	this.template = _.template($('#template').html())
+// submit button on form
+var button = $('button#submit');
+	button.on("click", function(event) {
+	event.preventDefault();
+			console.log("button click");
 
-// 	events: {
-		
-// 	},
+		var name = $('#name').val();
+		var age = $('#age').val();
+		var address = $('#address').val();
+		var phone = $('#phone').val();
+				console.log(name + " " + age + " " + address + " " + " " + phone);
 
-// 	initialize: function(){
-// 		this.listenTo(this.model, 'change', this.render)
-// 		this.listenTo(this.model, 'destroy', this.remove)
-// 		this.template = _.template($('#template').html())
-// 	},
-
-// 	render:function(){
-// 	   var myTemplate = this.template({item: this.model.attributes})
-		
-// 		this.$el.html(myTemplate);
-// 	}
-// })
-
-/////////////////////////////////////////////////////////////////
-
-// submit button
-var submitButton = $('button#submit');
-	submitButton.on("click", function(event) {
-	event.preventDefault(); 
-		console.log("button click");
-	})
+// post request for contacts
+		$.ajax({
+			url:"/contacts",
+			type:"POST",
+			data:{name: name, age: age, address: address, phone: phone}
+		}).done(function(data){
+			console.log(data);
+		})
+});
 
 // display categories on page
-	$.ajax({
-		type:"GET",
-		url:"/categories",
+$.ajax({
+	type:"GET",
+	url:"/categories",
 	}).done(function(data){
 			console.log(data);
 			var categories = data;
 			var ul_categories = $('ul');
 				for(i = 0; i < categories.length; i++){
-				ul_categories.append('<li>' +categories[i]["name"]+ '</li>');	
-				}
-	});
+				ul_categories.append('<li id="categories">' +categories[i]["name"]+ '</li>');	
+			}
+});
+
+
+
+
 
 
 
