@@ -8,6 +8,8 @@ allContacts();
 // loading category list from displayCategories function
 displayCategory();
 
+// loading randomuser API, testing purposes
+randomUserAPI();
 
 // submit button on form
 var button = $('i#submit');
@@ -19,16 +21,17 @@ var button = $('i#submit');
 		var age = $('#age').val();
 		var address = $('#address').val();
 		var phone_number = $('#phone').val();
+		var picture= $('#picture').val();
 		var category_id= $('#category_id').val();
 		var ul_contacts = $('ul');
-				console.log(name + " " + age + " " + address + " " + " " + phone_number+ " " + category_id);
+				console.log(name + " " + age + " " + address + " " + " " + phone_number+ " " + picture + " " +category_id);
 
 
 // post request for contacts
 $.ajax({
 		url:"/contacts",
 		type:"POST",
-		data:{name: name, age: age, address: address, phone_number: phone_number, category_id: category_id}
+		data:{name: name, age: age, address: address, phone_number: phone_number, picture: picture, category_id: category_id}
 			}).done(function(data){
 			console.log(data);
 			
@@ -40,7 +43,7 @@ $.ajax({
 			// ul_contacts.append("<li>" + "Name: " + name + "<br>" + "Age: " + age + "<br>" + "Address: " + address + "<br>" + "Phone: " + phone_number +"<br>"+ "Category ID: " + category_id+ "<button class='edit'>Edit</button>")
 		})
 		window.location.reload();
-});
+	});
 
 
 // display all categories on page and from select dropdown
@@ -63,7 +66,18 @@ $.ajax({
 	});
 };
 
-
+// randomuserAPI call
+function randomUserAPI() {
+$.ajax({
+  url: 'http://api.randomuser.me/',
+  dataType: 'json'
+	}).done(function(data){
+    console.log(data);
+    
+    var image = data["results"][0]["user"]["picture"]["thumbnail"];
+    	console.log(image);
+    });
+};
 
 var categories = [{"id":1,"name":"friends"},{"id":2,"name":"family"},{"id":3,"name":"co_worker"}];
 
@@ -124,7 +138,7 @@ function allContacts() {
 			
 				h2.append("All Contacts")
 					for (i=0; i < contacts.length; i++) {
-					ul_contacts.append("<li id='" + contacts[i]["id"] + "'>" + "Name: " +  contacts[i]["name"] +"<br>"+ "Age: " + contacts[i]["age"]+ "<br>" + "Phone Number: " + contacts[i]["phone_number"] + "<br>" + "Address: "+ contacts[i]["address"] + "<br>" + "<button class='edit'>Edit</button>")				
+					ul_contacts.append("<li id='" + contacts[i]["id"] + "'>" + "Name: " +  contacts[i]["name"] +"<br>"+ "Age: " + contacts[i]["age"]+ "<br>" + "Phone Number: " + contacts[i]["phone_number"] + "<br>" + "Address: "+ contacts[i]["address"] +"<br>"+"<button class='edit'>Edit</button>")				
 				}
 					editButton();
 					saveButton();
@@ -167,6 +181,7 @@ function saveButton(){
 		putRequestContact(newName, newAge, newPhoneNumber);
 	});
 };
+
 // save button, click working, WORK IN PROGRESS
 /////////////////////////////////////////////////////////////////
 
