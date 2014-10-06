@@ -8,6 +8,8 @@
 
 	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 
+	<link rel="stylesheet" href=".stylesheets/styles.css">
+
 
 	<script src='./javascript/jquery.js'></script>
 	<script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
@@ -19,36 +21,40 @@
 </head>
 <body>
 
-<!-- <marquee direction="right" scrollamount="100">
- -->	<div class="container">
+	<div class="container">
 			<div class="row-input">
-				
-					<h1>Contact List</h1>
 
-				<div class="form col-md-11 col-md-offset-1">
-							<input type="text" id="name" name="name" placeholder="Name">
-							<input type="text" id="age" name="age" placeholder="Age">
-							<input type="text" id="address" name="address" placeholder="Address">
-							<input type="text" id="phone" name="phone" placeholder="Phone">
-							<input type="text" id="picture" name="picture" placeholder="Add Photo">
+<!-- <marquee direction="right" scrollamount="50">
+ -->		
+				<div class="form col-md-8 col-md-offset-5">
+
+							<h1>Contact List</h1>
+
+							<input type="text" id="name" name="name" placeholder="Name"> <br>
+							<input type="text" id="age" name="age" placeholder="Age"> <br>
+							<input type="text" id="address" name="address" placeholder="Address"> <br>
+							<input type="text" id="phone" name="phone" placeholder="Phone"> <br>
+							<input type="text" id="picture" name="picture" placeholder="Add Photo"><i class="fa fa-camera-retro fa-1x" id="random_image" value="button"></i> <br>
 
 							<select name="category_id" id="category_id"> 
 							</select>
 
 							<i class="fa fa-plus-square-o fa-2x" id="submit" value="button"></i>
-							<i class="fa fa-camera-retro fa-2x" id="random_image" value="button"></i>
-							<i class="fa fa-search fa-2x" id="search" value="button"></i>
-
 							
-							<input type="text" id="search" name="search" placeholder="Search">
+							<br>
+							<br>
+							<input type="text" id="search" name="search" placeholder="Search"><i class="fa fa-search fa-1x" id="search" value="button"></i>
 
 
 <!-- 							<input type="text" id"search" name="search" placeholder="Search">
  -->
+						<div id="search_result"> </div>
 
 					</div>
 		</div>
 </div>
+</marquee>
+
 <br>
 <hr>
 
@@ -68,11 +74,8 @@
 			<section class="col-md-4 list">
 				<h2 class ="column_header3">Co-Workers</h2>
 				<ul class="co_worker" id="co_worker"> </ul>
-
 			</section>		
 	</div>
-
-
 
 
 		<h2 class="all_header"></h2>
@@ -82,8 +85,6 @@
 
 		<ul name="contacts" class="all_contacts">
 		</ul>
-
-</marquee>
 
 </body>
 </html>

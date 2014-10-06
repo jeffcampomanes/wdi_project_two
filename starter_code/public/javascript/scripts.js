@@ -66,12 +66,12 @@ var button = $('i#search');
 
 // if name in contact equal to name typed into the search input, push results into empty array		
 				if(contact['name'] == search){
-				var contacts = [contact["name"], contact["age"], contact["address"], contact["phone_number"], contact["picture"] ];
+				var contacts = [contact["name"], contact["age"], contact["address"], contact["phone_number"]];
 					searchResultsArray.push(contacts)
 							}
 						});
 					}).done(function(){
-					confirm(searchResultsArray);
+					$("#search_result").append(searchResultsArray);
 				});
 			});
 		};
@@ -193,7 +193,7 @@ function editButton() {
 			console.log("edit button has been clicked")
 			
 			var id = $(this).parent().attr("id");
-			$(this).parent().append("<br><input id='newName' placeholder='Name' </input> <br> <input id='newAge' placeholder='Age' </input> <br> <input id='newAddress' placeholder='Address' </input> <br> <input id='newPhoneNumber' placeholder='Phone Number' </input> <br> <select id='new_category_id'><option selected='selected'>Select category</option></select> <br> <input id='id' type='hidden' value='" + id + "'> <button class='save'>Save</button> <button class='delete'>Delete</button></li>");
+			$(this).parent().append("<br><input id='newName' placeholder='Name' </input> <br> <input id='newAge' placeholder='Age' </input> <br> <input id='newAddress' placeholder='Address' </input> <br> <input id='newPhoneNumber' placeholder='Phone Number' </input> <br> <select id='new_category_id'><option selected='selected'>Select category</option></select> <br> <input id='id' type='hidden' value='" + id + "'><i class='fa fa-floppy-o fa-2x' id='save' value='button'></i><i class='fa fa-trash fa-2x' id='delete' value='button'></i></li>");
 				// $(this).parent().append("<br><input id='newName' placeholder='Name' </input> <br> <input id='newAge' placeholder='Age' </input> <br> <input id='newAddress' placeholder='Address' </input> <br> <input id='newPhoneNumber' placeholder='Phone Number' </input> <button class='save'>Save</button> <button class='delete'>Delete</button></li>");
 
 			$.ajax({
@@ -216,7 +216,7 @@ function editButton() {
 
 // save button for changes in new input forms
 function saveButton(){
-	var $saveButton = $("button.save");
+	var $saveButton = $("i#save");
 	$saveButton.on("click", function(){
 		console.log("save button has been clicked");
 					
@@ -243,7 +243,7 @@ function saveButton(){
 
 // delete button
 function deleteButton() {
-	var deleteButton = $('.delete');
+	var deleteButton = $('i#delete');
 	deleteButton.on("click", function() {
 		console.log('Delete button working');
 	
