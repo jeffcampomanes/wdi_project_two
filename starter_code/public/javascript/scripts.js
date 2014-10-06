@@ -1,7 +1,7 @@
 $(function(){
 console.log("testing html page");
-
 /////////////////////////////////////////////////////////////////
+
 // loading contact list from allContacts function
 allContacts();
 
@@ -10,6 +10,8 @@ displayCategory();
 
 // randomuserAPI function
 randomuserAPI();
+
+searchButton();
 
 
 // submit button on form
@@ -46,6 +48,39 @@ $.ajax({
 		})
 		window.location.reload();
 });
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//search button
+function searchButton() {
+var button = $('i#search');
+	button.on("click", function(event) {
+	event.preventDefault();
+		console.log("search button click");
+
+		var searchName = $('input[name="search"]').val();
+		var searchResultsArray = [];
+
+		$.get('/contacts', function(contacts){
+			_.each(contacts, function(contact){
+		
+			if(contact['name'] == searchName){
+			var contactDetails = [contact['name'], contact['age'], contact['address'], contact['phone_number'], contact['picture']];
+			searchResultsArray.push(contactDetails)
+					}
+				});
+			}).done(function(){
+			confirm(searchResultsArray);
+			});
+		});
+};
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 
 
 // display all categories on page and from select dropdown
@@ -171,9 +206,8 @@ function editButton() {
 		});
 };
 
-/////////////////////////////////////////////////////////////////
 
-// save button, click working, id is being passed through. WORK IN PROGRESS
+// save button for changes in new input forms
 function saveButton(){
 	var $saveButton = $("button.save");
 	$saveButton.on("click", function(){
@@ -197,10 +231,6 @@ function saveButton(){
 		putRequestContact(newName, newAge, newAddress, newPhoneNumber, newId);
 	});
 };
-
-
-// save button, click working, WORK IN PROGRESS
-/////////////////////////////////////////////////////////////////
 
 // delete button
 function deleteButton() {
@@ -230,9 +260,7 @@ function deleteButton() {
 	});
 };
 
-/////////////////////////////////////////////////////////////////
-
-// put request for contact. WORK IN PROGRESS. id is not being passed through. THIS IS A FUCKING MESS
+// put request for contact
 function putRequestContact(name, age, address, phone_number, id){
 // debugger	
 // var newId= id;
@@ -248,13 +276,11 @@ function putRequestContact(name, age, address, phone_number, id){
 				$('li').html("<li>" + 'Name: '+ newName + "<br>" + 'Age: ' +newAge + 'Phone Number: ' +phone_number );
 		});
 				window.location.reload();
-
 };
 
-/////////////////////////////////////////////////////////////////
 
 
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // sorting 	
 // function sortingContacts(category){
 
