@@ -42,20 +42,19 @@ $.ajax({
 			deleteButton();
 			randomuserAPI();
 
-			
 			// ul_contacts.append("<li>" + "Name: " + name + "<br>" + "Age: " + age + "<br>" + "Address: " + address + "<br>" + "Phone: " + phone_number +"<br>"+ "Category ID: " + category_id+ "<button class='edit'>Edit</button>")
 		})
 		window.location.reload();
-	});
+});
 
 
 // display all categories on page and from select dropdown
 function displayCategory() {
-$.ajax({
+	$.ajax({
 			type:"GET",
 			url:"/categories",
 				}).done(function(data){
-				console.log(data);
+					console.log(data);
 			
 				var categories = data;
 				var h4_categories = $('.all_categories');
@@ -71,21 +70,21 @@ $.ajax({
 
 // randomuserAPI call
 function randomuserAPI() {
-$.ajax({
-  url: 'http://api.randomuser.me/',
-  dataType: 'json'
-	}).done(function(data){
-    console.log(data);
+	$.ajax({
+  	url: 'http://api.randomuser.me/',
+  	dataType: 'json'
+		}).done(function(data){
+    	console.log(data);
     
-    var image = data["results"][0]["user"]["picture"]["large"];
-    console.log(image);
-    var picture = $('#picture');
+    	var image = data["results"][0]["user"]["picture"]["thumbnail"];
+    		console.log(image);
+    	var picture = $('#picture');
 		
-		var addRandomPhotoButton = $('#random_image');
-		addRandomPhotoButton.on('click', function(event) {
-			event.preventDefault();
-			picture.val(image);
-		});
+			var photoButton = $('#random_image');
+			photoButton.on('click', function(event) {
+				event.preventDefault();
+				picture.val(image);
+			});
 	});
 };
 
