@@ -147,7 +147,7 @@ function allContacts() {
 			
 				h2.append("All Contacts")
 					for (i=0; i < contacts.length; i++) {
-					ul_contacts.append("<li id='" + contacts[i]["id"] + "'>" + "Name: " +  contacts[i]["name"] +"<br>"+ "Age: " + contacts[i]["age"]+ "<br>" + "Phone Number: " + contacts[i]["phone_number"] + "<br>" + "Address: "+ contacts[i]["address"] +"<br>" + "IMG URL: " +contacts[i]["picture"]+ "<br>" + "<i class='fa fa-pencil-square-o fa-2x' id='edit' value='button'></i>")				
+					ul_contacts.append("<li id='" + contacts[i]["id"] + "'>" + "Name: " +  contacts[i]["name"] +"<br>"+ "Age: " + contacts[i]["age"]+ "<br>" + "Phone Number: " + contacts[i]["phone_number"] + "<br>" + "Address: "+ contacts[i]["address"] +"<br>" + "<img src='" +contacts[i]["picture"]+ "'>" +"<br>" + "<i class='fa fa-pencil-square-o fa-2x' id='edit' value='button'></i>")				
 				}
 					editButton();
 					saveButton();
@@ -158,11 +158,14 @@ function allContacts() {
 
 // edit button, new form appears, how to change categories and make edit button dissapear upon click??
 function editButton() {
+
 			var $editButton = $("i#edit");
 			$editButton.on("click", function(){
 				console.log("edit button has been clicked")
-				$(this).parent().append("<br>" + "<input id='newName' placeholder='Name' </input> <br> <input id='newAge' placeholder='Age' </input> <br> <input id='newAddress' placeholder='Address' </input> <br> <input id='newPhoneNumber' placeholder='Phone Number' </input> <button class='save'>Save</button> <button class='delete'>Delete</button></li>");
-				
+				var id = $(this).parent().attr("id");
+				$(this).parent().append("<br><input id='newName' placeholder='Name' </input> <br> <input id='newAge' placeholder='Age' </input> <br> <input id='newAddress' placeholder='Address' </input> <br> <input id='newPhoneNumber' placeholder='Phone Number' </input><input id='id' type='hidden' value='" + id + "'> <button class='save'>Save</button> <button class='delete'>Delete</button></li>");
+				// $(this).parent().append("<br><input id='newName' placeholder='Name' </input> <br> <input id='newAge' placeholder='Age' </input> <br> <input id='newAddress' placeholder='Address' </input> <br> <input id='newPhoneNumber' placeholder='Phone Number' </input> <button class='save'>Save</button> <button class='delete'>Delete</button></li>");
+
 				saveButton();
 				deleteButton();
 		});
@@ -170,30 +173,34 @@ function editButton() {
 
 /////////////////////////////////////////////////////////////////
 
-// save button, click working, WORK IN PROGRESS
+// save button, click working, id is being passed through. WORK IN PROGRESS
 function saveButton(){
 	var $saveButton = $("button.save");
 	$saveButton.on("click", function(){
 		console.log("save button has been clicked");
-		
-			var id = $(this).parent().attr("id");
-			
+					
 			var $newNameInput = $("input#newName");
 			var $newAgeInput = $("input#newAge");
+			var $newAddressInput = $("input#newAddress");
 			var $newPhoneNumberInput = $("input#newPhoneNumber")
+			var $id = $("input#id")
 			
 			var newName = $newNameInput.val();
 			var newAge = $newAgeInput.val();
+			var newAddress = $newAddressInput.val();
 			var newPhoneNumber = $newPhoneNumberInput.val();
+			var newId = $id.val();
+		
+			// var id = $(this).parent().attr("id"); // id is passed through
+			// debugger
 
-
-		putRequestContact(newName, newAge, newPhoneNumber);
+		putRequestContact(newName, newAge, newAddress, newPhoneNumber, newId);
 	});
 };
 
+
 // save button, click working, WORK IN PROGRESS
 /////////////////////////////////////////////////////////////////
-
 
 // delete button
 function deleteButton() {
@@ -206,42 +213,43 @@ function deleteButton() {
 		var address = $('#address').val();
 		var phone_number = $('#phone_number').val();
 		var category_id = $('#category_id').val();
-		
+
 		var id = $(this).parent().attr("id");
 		var li = $('#'+id);
 
 		li.remove();
 
-	$.ajax({
-		url:"/contacts/"+id,
-		type: 'DELETE',
-		data: {name: name, age: age, address: address, phone_number: phone_number, category_id: category_id, id: id }	
-			}).done(function(response){
-			console.log(response);
-		})
-					window.location.reload();
-
+		$.ajax({
+			url:"/contacts/"+id,
+			type: 'DELETE',
+			data: {name: name, age: age, address: address, phone_number: phone_number, category_id: category_id, id: id }	
+				}).done(function(response){
+				console.log(response);
+			})
+			window.location.reload();
 	});
 };
 
 /////////////////////////////////////////////////////////////////
 
-// put request for contact. WORK IN PROGRESS. THIS IS A FUCKING MESS
-function putRequestContact(name, age, address, phone_number){
+// put request for contact. WORK IN PROGRESS. id is not being passed through. THIS IS A FUCKING MESS
+function putRequestContact(name, age, address, phone_number, id){
+// debugger	
+// var newId= id;
 
-		var id = $(this).parent().attr("id");
-
-		$.ajax({
+	$.ajax({
 		type: "PUT",
 		url: "/contacts/"+id,
-		data: {name: name, age: age, address: address, phone_number: phone_number}
+		data: {name: name, age: age, address: address, phone_number: phone_number, id: id}
 		}).done(function(data){
 			console.log(data);
-				var contacts = JSON(data);
-				var li = contacts["id"];
-				$('li').html("<li>" + 'Name: '+ newName + " <br> " + 'Age: ' +newAge + phone_number );
+				var contacts = data;
+				var li = contacts[i]["id"];
+				$('li').html("<li>" + 'Name: '+ newName + "<br>" + 'Age: ' +newAge + 'Phone Number: ' +phone_number );
 		});
-	};
+				window.location.reload();
+
+};
 
 /////////////////////////////////////////////////////////////////
 
