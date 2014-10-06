@@ -2,17 +2,13 @@ $(function(){
 console.log("testing html page");
 /////////////////////////////////////////////////////////////////
 
-// loading contact list from allContacts function
-allContacts();
-
-// loading category list from displayCategories function
-displayCategory();
-
-// randomuserAPI function
-randomuserAPI();
-
-searchButton();
-
+function loadAll(){
+	allContacts(); // loading contact list from allContacts function
+	displayCategory(); // loading category list from displayCategories function
+	randomuserAPI(); // randomuserAPI function
+	searchButton(); // search function
+};
+loadAll();
 
 // submit button on form
 var button = $('i#submit');
@@ -51,7 +47,7 @@ $.ajax({
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//search button, a bit crazy looking, but working. need to work on this more later on today!
+//search button, a bit crazy looking, but working. when typing the name, name needs to be EXACT or else search won't work. need to work on this more later on today!
 function searchButton() {
 var button = $('i#search');
 	button.on("click", function(event) {
@@ -60,16 +56,16 @@ var button = $('i#search');
 
 
 // search input
-		var searchName = $('input#search').val();
+		var search = $('input#search').val();
 // empty array that we will use later to push results in	
 		var searchResultsArray = [];
 
 // underscore.js .each method to loop.
 			$.get('/contacts', function(contacts) {
-			_.each(contacts, function(contact) {
+				_.each(contacts, function(contact) {
 
 // if name in contact equal to name typed into the search input, push results into empty array		
-			if(contact['name'] == searchName){
+				if(contact['name'] == search){
 				var contacts = [contact["name"], contact["age"], contact["address"], contact["phone_number"], contact["picture"] ];
 					searchResultsArray.push(contacts)
 							}
@@ -192,16 +188,28 @@ function allContacts() {
 
 // edit button, new form appears, how to change categories and make edit button dissapear upon click??
 function editButton() {
-
-			var $editButton = $("i#edit");
-			$editButton.on("click", function(){
-				console.log("edit button has been clicked")
-				var id = $(this).parent().attr("id");
-				$(this).parent().append("<br><input id='newName' placeholder='Name' </input> <br> <input id='newAge' placeholder='Age' </input> <br> <input id='newAddress' placeholder='Address' </input> <br> <input id='newPhoneNumber' placeholder='Phone Number' </input><input id='id' type='hidden' value='" + id + "'> <button class='save'>Save</button> <button class='delete'>Delete</button></li>");
+	var $editButton = $("i#edit");
+		$editButton.on("click", function(){
+			console.log("edit button has been clicked")
+			
+			var id = $(this).parent().attr("id");
+			$(this).parent().append("<br><input id='newName' placeholder='Name' </input> <br> <input id='newAge' placeholder='Age' </input> <br> <input id='newAddress' placeholder='Address' </input> <br> <input id='newPhoneNumber' placeholder='Phone Number' </input> <br> <select id='new_category_id'><option selected='selected'>Select category</option></select> <br> <input id='id' type='hidden' value='" + id + "'> <button class='save'>Save</button> <button class='delete'>Delete</button></li>");
 				// $(this).parent().append("<br><input id='newName' placeholder='Name' </input> <br> <input id='newAge' placeholder='Age' </input> <br> <input id='newAddress' placeholder='Address' </input> <br> <input id='newPhoneNumber' placeholder='Phone Number' </input> <button class='save'>Save</button> <button class='delete'>Delete</button></li>");
 
-				saveButton();
-				deleteButton();
+			$.ajax({
+				url:'/categories',
+				type: 'GET'
+				}).done(function(data){
+					console.log(data)
+				
+				var category = data;
+					for (i=0; i < category.length; i++) {
+					var categories = $('select#new_category_id');
+					categories.append('<option value="' + category[i].id + '">' + category[i]["name"] + '</option>'); 
+	}
+})
+			saveButton();
+			deleteButton();
 		});
 };
 
@@ -216,18 +224,20 @@ function saveButton(){
 			var $newAgeInput = $("input#newAge");
 			var $newAddressInput = $("input#newAddress");
 			var $newPhoneNumberInput = $("input#newPhoneNumber")
+			var newCategoryIdInput = $('select#new_category_id');
 			var $id = $("input#id")
 			
 			var newName = $newNameInput.val();
 			var newAge = $newAgeInput.val();
 			var newAddress = $newAddressInput.val();
 			var newPhoneNumber = $newPhoneNumberInput.val();
+			var newCategoryId = newCategoryIdInput.val();
 			var newId = $id.val();
 		
 			// var id = $(this).parent().attr("id"); // id is passed through
 			// debugger
 
-		putRequestContact(newName, newAge, newAddress, newPhoneNumber, newId);
+		putRequestContact(newName, newAge, newAddress, newPhoneNumber, newCategoryId, newId);
 	});
 };
 
@@ -260,14 +270,14 @@ function deleteButton() {
 };
 
 // put request for contact
-function putRequestContact(name, age, address, phone_number, id){
+function putRequestContact(name, age, address, phone_number, category_id, id){
 // debugger	
 // var newId= id;
 
 	$.ajax({
 		type: "PUT",
 		url: "/contacts/"+id,
-		data: {name: name, age: age, address: address, phone_number: phone_number, id: id}
+		data: {name: name, age: age, address: address, phone_number: phone_number, category_id: category_id, id: id}
 		}).done(function(data){
 			console.log(data);
 				var contacts = data;
