@@ -71,8 +71,8 @@ function displayCategory() {
 // randomuserAPI call
 function randomuserAPI() {
 	$.ajax({
-  	url: 'http://api.randomuser.me/',
-  	dataType: 'json'
+  	url:"http://api.randomuser.me/",
+  	dataType:"json"
 		}).done(function(data){
     	console.log(data);
     
@@ -147,7 +147,7 @@ function allContacts() {
 			
 				h2.append("All Contacts")
 					for (i=0; i < contacts.length; i++) {
-					ul_contacts.append("<li id='" + contacts[i]["id"] + "'>" + "Name: " +  contacts[i]["name"] +"<br>"+ "Age: " + contacts[i]["age"]+ "<br>" + "Phone Number: " + contacts[i]["phone_number"] + "<br>" + "Address: "+ contacts[i]["address"] +"<br>"+"<button class='edit'>Edit</button>")				
+					ul_contacts.append("<li id='" + contacts[i]["id"] + "'>" + "Name: " +  contacts[i]["name"] +"<br>"+ "Age: " + contacts[i]["age"]+ "<br>" + "Phone Number: " + contacts[i]["phone_number"] + "<br>" + "Address: "+ contacts[i]["address"] +"<br>" + "IMG URL: " +contacts[i]["picture"]+ "<br>" + "<i class='fa fa-pencil-square-o fa-2x' id='edit' value='button'></i>")				
 				}
 					editButton();
 					saveButton();
@@ -158,7 +158,7 @@ function allContacts() {
 
 // edit button, new form appears, how to change categories and make edit button dissapear upon click??
 function editButton() {
-			var $editButton = $("button.edit");
+			var $editButton = $("i#edit");
 			$editButton.on("click", function(){
 				console.log("edit button has been clicked")
 				$(this).parent().append("<br>" + "<input id='newName' placeholder='Name' </input> <br> <input id='newAge' placeholder='Age' </input> <br> <input id='newAddress' placeholder='Address' </input> <br> <input id='newPhoneNumber' placeholder='Phone Number' </input> <button class='save'>Save</button> <button class='delete'>Delete</button></li>");
@@ -219,6 +219,8 @@ function deleteButton() {
 			}).done(function(response){
 			console.log(response);
 		})
+					window.location.reload();
+
 	});
 };
 
@@ -255,18 +257,6 @@ function putRequestContact(name, age, address, phone_number){
 // 	else return ("co_workers");
 // };
 
-
-// function allCategories() {
-// 		var leftColumn = $('.column_header1');
-// 		leftColumn.append(category[0]["name"]);
-
-// 		var middleColumn = $('.column_header2');
-// 		middleColumn.append(category[1]["name"]);
-
-// 		var rightColumn = $('.column_header3');
-// 		rightColumn.append(category[2]["name"]);
-// 		}
-// allCategories();
 
 
 
