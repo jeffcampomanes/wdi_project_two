@@ -8,8 +8,9 @@ allContacts();
 // loading category list from displayCategories function
 displayCategory();
 
-// loading randomuser API, testing purposes
-randomUserAPI();
+// randomuserAPI function
+randomuserAPI();
+
 
 // submit button on form
 var button = $('i#submit');
@@ -39,6 +40,8 @@ $.ajax({
 
 			editButton();
 			deleteButton();
+			randomuserAPI();
+
 			
 			// ul_contacts.append("<li>" + "Name: " + name + "<br>" + "Age: " + age + "<br>" + "Address: " + address + "<br>" + "Phone: " + phone_number +"<br>"+ "Category ID: " + category_id+ "<button class='edit'>Edit</button>")
 		})
@@ -67,16 +70,23 @@ $.ajax({
 };
 
 // randomuserAPI call
-function randomUserAPI() {
+function randomuserAPI() {
 $.ajax({
   url: 'http://api.randomuser.me/',
   dataType: 'json'
 	}).done(function(data){
     console.log(data);
     
-    var image = data["results"][0]["user"]["picture"]["thumbnail"];
-    	console.log(image);
-    });
+    var image = data["results"][0]["user"]["picture"]["large"];
+    console.log(image);
+    var picture = $('#picture');
+		
+		var addRandomPhotoButton = $('#random_image');
+		addRandomPhotoButton.on('click', function(event) {
+			event.preventDefault();
+			picture.val(image);
+		});
+	});
 };
 
 var categories = [{"id":1,"name":"friends"},{"id":2,"name":"family"},{"id":3,"name":"co_worker"}];
