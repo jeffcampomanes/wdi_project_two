@@ -45,7 +45,6 @@ $.ajax({
 		window.location.reload();
 });
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //search button, a bit crazy looking, but working. when typing the name, name needs to be EXACT or else search won't work. need to work on this more later on today!
 function searchButton() {
@@ -53,7 +52,6 @@ var button = $('i#search');
 	button.on("click", function(event) {
 	event.preventDefault();
 		console.log("search button click");
-
 
 // search input
 		var search = $('input#search').val();
@@ -66,7 +64,7 @@ var button = $('i#search');
 
 // if name in contact equal to name typed into the search input, push results into empty array		
 				if(contact['name'] == search){
-				var contacts = [contact["name"], contact["age"], contact["address"], contact["phone_number"]];
+				var contacts = "Name: " + contact["name"] + "<br>" + "Age: " + contact["age"] + "<br>" + "Address: " + contact["address"] + "<br>" + "Phone: " + contact["phone_number"] + "<br>" + "<img src='" + contact["picture"] + "'>"
 					searchResultsArray.push(contacts)
 							}
 						});
@@ -75,8 +73,6 @@ var button = $('i#search');
 				});
 			});
 		};
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 
 // display all categories on page and from select dropdown
 function displayCategory() {
@@ -151,12 +147,13 @@ $.ajax({
 		var ul_co_worker = $('#co_worker');
 
 
-		for (i = 0; i < contacts.length; i++) {
-			var contactName = contacts[i]["name"];
-			var contactAge = contacts[i]["age"];
-			var contactAddress = contacts[i]["address"];
-			var contactPhoneNumber = contacts[i]["phone_number"];
-			ul.append("<li>" + contactName + " </li>");
+			for (i = 0; i < contacts.length; i++) {
+				var contactName = contacts[i]["name"];
+				var contactAge = contacts[i]["age"];
+				var contactAddress = contacts[i]["address"];
+				var contactPhoneNumber = contacts[i]["phone_number"];
+				
+				ul.append("<li>" + contactName + " </li>");
 		};
 	});
 };
@@ -167,7 +164,7 @@ function allContacts() {
 	$.ajax({
 			url:"/contacts",
 			type:"GET"
-			}).done(function(data){
+				}).done(function(data){
 				var contacts = data;
 				console.log(data);
 	
