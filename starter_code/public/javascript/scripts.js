@@ -51,36 +51,35 @@ $.ajax({
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//search button
+//search button, a bit crazy looking, but working. need to work on this more later on today!
 function searchButton() {
 var button = $('i#search');
 	button.on("click", function(event) {
 	event.preventDefault();
 		console.log("search button click");
 
-		var searchName = $('input[name="search"]').val();
+
+// search input
+		var searchName = $('input#search').val();
+// empty array that we will use later to push results in	
 		var searchResultsArray = [];
 
-		$.get('/contacts', function(contacts){
-			_.each(contacts, function(contact){
-		
+// underscore.js .each method to loop.
+			$.get('/contacts', function(contacts) {
+			_.each(contacts, function(contact) {
+
+// if name in contact equal to name typed into the search input, push results into empty array		
 			if(contact['name'] == searchName){
-			var contactDetails = [contact['name'], contact['age'], contact['address'], contact['phone_number'], contact['picture']];
-			searchResultsArray.push(contactDetails)
-					}
+				var contacts = [contact["name"], contact["age"], contact["address"], contact["phone_number"], contact["picture"] ];
+					searchResultsArray.push(contacts)
+							}
+						});
+					}).done(function(){
+					confirm(searchResultsArray);
 				});
-			}).done(function(){
-			confirm(searchResultsArray);
 			});
-		});
-};
-
-
-
-
+		};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
 
 
 // display all categories on page and from select dropdown
