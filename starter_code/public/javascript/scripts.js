@@ -48,15 +48,15 @@ $.ajax({
 
 //search button, a bit crazy looking, but working. when typing the name, name needs to be EXACT or else search won't work. need to work on this more later on today!
 function searchButton() {
-var button = $('i#search');
-	button.on("click", function(event) {
-	event.preventDefault();
-		console.log("search button click");
+	var searchButton = $('i#search');
+		searchButton.on("click", function(event) {
+		event.preventDefault();
+			console.log("search button click");
 
 // search input
-		var search = $('input#search').val();
+			var search = $('input#search').val();
 // empty array that we will use later to push results in	
-		var searchResultsArray = [];
+			var searchResultsArray = [];
 
 // underscore.js .each method to loop.
 			$.get('/contacts', function(contacts) {
@@ -64,7 +64,7 @@ var button = $('i#search');
 
 // if name in contact equal to name typed into the search input, push results into empty array		
 				if(contact['name'] == search){
-				var contacts = "Name: " + contact["name"] + "<br>" + "Age: " + contact["age"] + "<br>" + "Address: " + contact["address"] + "<br>" + "Phone: " + contact["phone_number"] + "<br>" + "<img src='" + contact["picture"] + "'>"
+				var contacts = "Name: " + contact["name"] + "<br>" + "Age: " + contact["age"] + "<br>" + "Address: " + contact["address"] + "<br>" + "Phone: " + contact["phone_number"] + "<br>" + "<img src='" + contact["picture"] + "'><i class='fa fa-refresh fa-1.5x' id='refresh' value='button'></i>"
 					searchResultsArray.push(contacts)
 							}
 						});
@@ -73,6 +73,7 @@ var button = $('i#search');
 				});
 			});
 		};
+
 
 // display all categories on page and from select dropdown
 function displayCategory() {
@@ -117,13 +118,13 @@ function randomuserAPI() {
 var categories = [{"id":1,"name":"friends"},{"id":2,"name":"family"},{"id":3,"name":"co_worker"}];
 
 var leftColumn = $('.column_header1');
-	contactsInCategory("friends");
+contactsInCategory("friends");
 
 var middleColumn = $('.column_header2');
-	contactsInCategory("family");
+contactsInCategory("family");
 
 var rightColumn = $('.column_header3');
-	contactsInCategory("co_worker");
+contactsInCategory("co_worker");
 
 //sorting contacts and displaying via specific category
 function contactsInCategory(category) {
@@ -138,13 +139,13 @@ $.ajax({
 		type: 'GET'
 		}).done(function(data){
 		
-		var contacts = data["contacts"];
-			console.log(contacts);
+			var contacts = data["contacts"];
+				console.log(contacts);
 		
-		var ul = $("#" + category);
-		var ul_friends = $('#friends');
-		var ul_family = $('#family');
-		var ul_co_worker = $('#co_worker');
+			var ul = $("#" + category);
+			var ul_friends = $('#friends');
+			var ul_family = $('#family');
+			var ul_co_worker = $('#co_worker');
 
 
 			for (i = 0; i < contacts.length; i++) {
@@ -172,41 +173,42 @@ function allContacts() {
 				var h2 = $('.all_header');
 
 			
-				h2.append("All Contacts")
-					for (i=0; i < contacts.length; i++) {
-					ul_contacts.append("<li id='" + contacts[i]["id"] + "'>" + "Name: " +  contacts[i]["name"] +"<br>"+ "Age: " + contacts[i]["age"]+ "<br>" + "Phone Number: " + contacts[i]["phone_number"] + "<br>" + "Address: "+ contacts[i]["address"] +"<br>" + "<img src='" +contacts[i]["picture"]+ "'>" +"<br>" + "<i class='fa fa-pencil-square-o fa-2x' id='edit' value='button'></i>")				
-				}
-					editButton();
-					saveButton();
-					deleteButton();
-		});
-};
+					h2.append("All Contacts")
+						for (i=0; i < contacts.length; i++) {
+						ul_contacts.append("<li id='" + contacts[i]["id"] + "'>" + "Name: " +  contacts[i]["name"] +"<br>"+ "Age: " + contacts[i]["age"]+ "<br>" + "Phone Number: " + contacts[i]["phone_number"] + "<br>" + "Address: "+ contacts[i]["address"] +"<br>" + "<img src='" +contacts[i]["picture"]+ "'>" +"<br>" + "<i class='fa fa-pencil-square-o fa-2x' id='edit' value='button'></i>")				
+					}
+					
+						editButton();
+						saveButton();
+						deleteButton();
+			});
+	};
 
 
 // edit button, new form appears, how to change categories and make edit button dissapear upon click??
 function editButton() {
 	var $editButton = $("i#edit");
-		$editButton.on("click", function(){
-			console.log("edit button has been clicked")
+			$editButton.on("click", function(){
+				console.log("edit button has been clicked")
 			
-			var id = $(this).parent().attr("id");
-			$(this).parent().append("<br><input id='newName' placeholder='Name' </input> <br> <input id='newAge' placeholder='Age' </input> <br> <input id='newAddress' placeholder='Address' </input> <br> <input id='newPhoneNumber' placeholder='Phone Number' </input> <br> <select id='new_category_id'><option selected='selected'>Select category</option></select> <br> <input id='id' type='hidden' value='" + id + "'><i class='fa fa-floppy-o fa-2x' id='save' value='button'></i><i class='fa fa-trash fa-2x' id='delete' value='button'></i></li>");
+				var id = $(this).parent().attr("id");
+				$(this).parent().append("<br><input id='newName' placeholder='Name' </input> <br> <input id='newAge' placeholder='Age' </input> <br> <input id='newAddress' placeholder='Address' </input> <br> <input id='newPhoneNumber' placeholder='Phone Number' </input> <br> <select id='new_category_id'><option selected='selected'>Select category</option></select> <br> <input id='id' type='hidden' value='" + id + "'><i class='fa fa-floppy-o fa-2x' id='save' value='button'></i><i class='fa fa-trash fa-2x' id='delete' value='button'></i></li>");
 				// $(this).parent().append("<br><input id='newName' placeholder='Name' </input> <br> <input id='newAge' placeholder='Age' </input> <br> <input id='newAddress' placeholder='Address' </input> <br> <input id='newPhoneNumber' placeholder='Phone Number' </input> <button class='save'>Save</button> <button class='delete'>Delete</button></li>");
 
-			$.ajax({
-				url:'/categories',
-				type: 'GET'
-				}).done(function(data){
-					console.log(data)
+				$.ajax({
+					url:'/categories',
+					type: 'GET'
+					}).done(function(data){
+						console.log(data)
 				
-				var category = data;
-					for (i=0; i < category.length; i++) {
-					var categories = $('select#new_category_id');
-					categories.append('<option value="' + category[i].id + '">' + category[i]["name"] + '</option>'); 
-	}
+					var category = data;
+						for (i=0; i < category.length; i++) {
+							var categories = $('select#new_category_id');
+							categories.append('<option value="' + category[i].id + '">' + category[i]["name"] + '</option>'); 
+		}
 })
-			saveButton();
-			deleteButton();
+					saveButton();
+					deleteButton();
 		});
 };
 
