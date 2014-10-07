@@ -1,0 +1,97 @@
+<html>
+<head>
+	<title>Project Two</title>
+
+	<link rel="stylesheet" href="http://bootswatch.com/superhero/bootstrap.min.css">
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+
+<!-- 	<link rel="stylesheet" href=".stylesheets/styles.css">
+ -->
+
+	<script src='./javascript/jquery.js'></script>
+	<script src='http://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.0/jquery.validate.js'></script>
+	<script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
+	<script src='./javascript/underscore.js'></script>
+	<script src='./javascript/backbone.js'></script>
+	<script src="./javascript/scripts.js"></script>
+
+
+</head>
+<body>
+
+	<div class="container">
+			<div class="row-input">
+
+<!-- <marquee direction="right" scrollamount="50">
+ -->		
+				<div class="form col-md-8 col-md-offset-5">
+
+					<h1>Contact List</h1>
+							
+					<form class="cmxform" id="form_validation">
+  					<fieldset>
+  						
+  						<input type="text" id="name" name="name" placeholder="Name" minlength="2" type="text" required> <br>
+              <input type="text" id="age" name="age" placeholder="Age" minlength="1" type="text" required> <br>
+              <input type="text" id="address" name="address" placeholder="Address"minlength="5" type="text" required> <br>
+              <input type="text" id="phone" name="phone" placeholder="Phone" minlength="5" type="text" required> <br>
+              <input type="url" id="picture" name="picture" placeholder="Add Photo"><i class="fa fa-camera-retro fa-1x" id="random_image" value="button" required></i> <br>
+
+              <select class="form-group" name="category_id" id="category_id"> 
+              </select>
+
+              <i class="fa fa-plus-square-o fa-1.5x" id="submit" value="button"></i>
+
+              <br>
+              <br>
+              <input type="text" id="search" name="search" placeholder="Search"><i class="fa fa-search fa-1x" id="search" value="button"></i>
+  					</fieldset>
+					</form>
+
+				<script>
+				$("#form_validation").validate();
+				</script>
+
+
+						<div id="search_result"> </div>
+					</div>
+		</div>
+</div>
+</marquee>
+
+<br>
+<hr>
+
+<header class="col-md-11 col-md-offset-1">
+
+	<div class="row">
+			<section class="col-md-4 list">
+				<h2 class="column_header1">Friends</h2>
+				<ul class="friends" id="friends"> </ul>
+			</section>
+			
+			<section class="col-md-4 list">
+				<h2 class="column_header2">Family</h2>
+				<ul class="family" id="family"></ul>
+			</section>
+
+			<section class="col-md-4 list">
+				<h2 class ="column_header3">Co-Workers</h2>
+				<ul class="co_worker" id="co_worker"> </ul>
+			</section>		
+</div>
+
+		<h2 class="all_header"></h2>
+		
+		<h4 name="categories" class="all_categories">
+		</h4>
+
+		<ul name="contacts" class="all_contacts">
+		</ul>
+
+
+</body>
+</html>
