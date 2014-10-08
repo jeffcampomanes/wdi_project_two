@@ -64,14 +64,16 @@ function searchButton() {
 
 // if name in contact equal to name typed into the search input, push results into empty array		
 				if(contact['name'] == search){
-				var contacts = "Name: " + contact["name"] + "<br>" + "Age: " + contact["age"] + "<br>" + "Address: " + contact["address"] + "<br>" + "Phone: " + contact["phone_number"] + "<br>" + "<img src='" + contact["picture"] + "'><i class='fa fa-refresh fa-1.5x' id='refresh' value='button'></i>"
+				var contacts = "Name: " + contact["name"] + "<br>" + "Age: " + contact["age"] + "<br>" + "Address: " + contact["address"] + "<br>" + "Phone: " + contact["phone_number"] + "<br>" + "<img src='" + contact["picture"] + "'><br><i class='fa fa-caret-square-o-left fa-1.5x' id='back' value='button'></i>"
 					searchResultsArray.push(contacts)
 							}
 						});
 					}).done(function(){
 					$("#search_result").append(searchResultsArray);
+
+					backButton();
 				});
-			});
+			});;
 		};
 
 
@@ -190,9 +192,11 @@ function editButton() {
 	var $editButton = $("i#edit");
 			$editButton.on("click", function(){
 				console.log("edit button has been clicked")
-			
+
+				$("#input_field").empty('');	
+
 				var id = $(this).parent().attr("id");
-				$(this).parent().append("<br><input id='newName' placeholder='Name' </input> <br> <input id='newAge' placeholder='Age' </input> <br> <input id='newAddress' placeholder='Address' </input> <br> <input id='newPhoneNumber' placeholder='Phone Number' </input> <br> <select id='new_category_id'><option selected='selected'>Select category</option></select> <br> <input id='id' type='hidden' value='" + id + "'><i class='fa fa-floppy-o fa-2x' id='save' value='button'></i><i class='fa fa-trash fa-2x' id='delete' value='button'></i></li>");
+				$(this).parent().append("<div id='input_field'><input id='newName' placeholder='Name' </input> <br> <input id='newAge' placeholder='Age' </input> <br> <input id='newAddress' placeholder='Address' </input> <br> <input id='newPhoneNumber' placeholder='Phone Number' </input> <br> <select id='new_category_id'><option selected='selected'>Select category</option></select> <i class='fa fa-floppy-o fa-2x' id='save' value='button'></i><i class='fa fa-trash fa-2x' id='delete' value='button'></i><br> <input id='id' type='hidden' value='" + id + "'><i class='fa fa-caret-square-o-left fa-2x' id='back' value='button'></i></li></div>");
 				// $(this).parent().append("<br><input id='newName' placeholder='Name' </input> <br> <input id='newAge' placeholder='Age' </input> <br> <input id='newAddress' placeholder='Address' </input> <br> <input id='newPhoneNumber' placeholder='Phone Number' </input> <button class='save'>Save</button> <button class='delete'>Delete</button></li>");
 
 				$.ajax({
@@ -200,7 +204,7 @@ function editButton() {
 					type: 'GET'
 					}).done(function(data){
 						console.log(data)
-				
+
 					var category = data;
 						for (i=0; i < category.length; i++) {
 							var categories = $('select#new_category_id');
@@ -209,6 +213,18 @@ function editButton() {
 })
 					saveButton();
 					deleteButton();
+					backButton();
+
+		});
+
+};
+
+function backButton(){
+	var $backButton = $("i#back");
+			$backButton.on("click", function(){
+				console.log("back button has been clicked");
+			
+			window.location.reload();
 		});
 };
 
