@@ -186,7 +186,6 @@ function allContacts() {
 			});
 	};
 
-
 // edit button, new form appears, how to change categories and make edit button dissapear upon click??
 function editButton() {
 	var $editButton = $("i#edit");
