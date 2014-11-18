@@ -1,5 +1,4 @@
-Contact List
-This is an application that allows a user to store and organize their contacts.
+Contact List: This is an application that allows a user to store and organize their contacts.
 
 Data Model:
 * The models used in the application are Contact and Category
